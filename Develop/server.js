@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 
+const router = require("express").router(); 
+
+
 const PORT = process.env.PORT || 3000;
 
 const Cardio = require("./workoutModel");
@@ -18,20 +21,28 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
-app.post("/submit", ({ body }, res) => {
+app.get("/exercise", function(req, res) {
+    res.sendFile(path.join(__dirname, "./public/exercise.html"));
+  });
+
+app.get("/stats", function(req, res) {
+    res.sendFile(path.join(__dirname, "./public/stats.html"));
+  });
+
+app.post("/api/workouts", ({ body }, res) => {
     Cardio.create(body)
-      .then(dbUser => {
-        res.json(dbUser);
+      .then(cardio => {
+        res.json(cardio);
       })
       .catch(err => {
         res.json(err);
       });
   });
 
-app.post("/submit", ({ body }, res) => {
+app.post("/api/workouts", ({ body }, res) => {
     Resistance.create(body)
-      .then(dbUser => {
-        res.json(dbUser);
+      .then(resistance => {
+        res.json(resistance);
       })
       .catch(err => {
         res.json(err);
