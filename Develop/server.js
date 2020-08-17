@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 
-const router = require("express").router(); 
+const router = require("express").Router(); 
 
 
 const PORT = process.env.PORT || 3000;
@@ -29,23 +29,23 @@ app.get("/stats", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/stats.html"));
   });
 
-app.post("/api/workouts", ({ body }, res) => {
+router.post("/api/workouts", ({ body }, res) => {
     Cardio.create(body)
-      .then(cardio => {
-        res.json(cardio);
+      .then(dbCardio => {
+        res.json(dbCardio);
       })
       .catch(err => {
-        res.json(err);
+        res.status(400).json(err);
       });
   });
 
-app.post("/api/workouts", ({ body }, res) => {
+router.post("/api/workouts", ({ body }, res) => {
     Resistance.create(body)
-      .then(resistance => {
-        res.json(resistance);
+      .then(dbResistance => {
+        res.json(dbResistance);
       })
       .catch(err => {
-        res.json(err);
+        res.status(400).json(err);
       });
   });
 
