@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Workout = new Schema({
-    
+
     name: {
       type: String,
       unique: true, 
@@ -44,4 +44,4 @@ const Workout = new Schema({
 
 const Workout = mongoose.model("Workout", Workout);
 
-module.exports = Cardio; 
+module.exports = Workout; 
